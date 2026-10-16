@@ -1,0 +1,64 @@
+﻿@model SurveyVM
+
+@{
+    ViewData["Title"] = "Edit Survey";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4"><i class="bi bi-pencil-square"></i> Edit Survey</h2>
+    <form asp-area="Creator" asp-controller="Survey" asp-action="EditSurvey" method="post"
+          enctype="multipart/form-data">
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+        <!-- Hidden fields -->
+        <input asp-for="Survey.SurveyId" type="hidden" />
+
+        <input asp-for="SourceView" type="hidden" />
+        <input asp-for="SearchString" type="hidden" />
+        <input asp-for="CurrentSort" type="hidden" />
+        <input asp-for="CurrentPage" type="hidden" />
+
+        <div class="row">
+            <div class="col-md-7">
+                <div class="mb-3">
+                    <label asp-for="Survey.Title" class="form-label">
+                        <i class="bi bi-tag"></i> Title
+                    </label>
+                    <input asp-for="Survey.Title" class="form-control" />
+                    <span asp-validation-for="Survey.Title" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Survey.Description" class="form-label">
+                        <i class="bi bi-info-circle"></i> Description
+                    </label>
+                    <textarea asp-for="Survey.Description" class="form-control" rows="4"></textarea>
+                    <span asp-validation-for="Survey.Description" class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-success me-2">
+                <i class="bi bi-check-circle"></i> Save Changes
+            </button>
+            <a asp-area="Creator"
+               asp-controller="Survey"
+               asp-action="GetAllSurveys"
+               asp-route-sourceView="@Model.SourceView"
+               asp-route-id="@Model.Survey.SurveyId"
+               asp-route-searchString="@Model.SearchString"
+               asp-route-currentSort="@Model.CurrentSort"
+               asp-route-currentPage="@Model.CurrentPage"
+               class="btn btn-secondary">
+                <i class="bi bi-arrow-left-circle"></i> Cancel
+            </a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

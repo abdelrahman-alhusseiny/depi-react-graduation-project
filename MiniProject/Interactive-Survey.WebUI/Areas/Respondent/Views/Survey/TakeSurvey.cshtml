@@ -1,0 +1,49 @@
+﻿@model RespondentSurveyVM
+
+@{
+    ViewData["Title"] = "Take Survey";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">
+        <i class="bi bi-clipboard-check"></i> @Model.Survey.Title
+    </h2>
+    <p class="text-muted">@Model.Survey.Description</p>
+
+    <form asp-action="TakeSurvey" asp-controller="Survey" asp-area="Respondent" method="post">
+        <input type="hidden" name="surveyId" value="@Model.Survey.SurveyId" />
+
+        @for (int i = 0; i < Model.Questions.Count; i++)
+        {
+            var question = Model.Questions[i];
+
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <span class="fw-bold text-primary">Q@(i + 1): @question.Question.QuestionText</span>
+                </div>
+                <div class="card-body">
+                    @foreach (var option in question.Options.Take(4))
+                    {
+                        <div class="form-check mb-2">
+                            <input class="form-check-input"
+                                   type="radio"
+                                   name="Answers[@question.Question.QuestionId]"
+                                   value="@option.OptionId"
+                                   id="option_@option.OptionId"
+                                   required />
+                            <label class="form-check-label" for="option_@option.OptionId">
+                                @option.OptionText
+                            </label>
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+
+        <div class="mt-4 text-end">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-send-check"></i> Submit Survey
+            </button>
+        </div>
+    </form>
+</div>

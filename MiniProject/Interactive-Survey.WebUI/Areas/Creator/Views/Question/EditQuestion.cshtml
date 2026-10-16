@@ -1,0 +1,48 @@
+﻿@model QuestionVM
+
+@{
+    ViewData["Title"] = "Edit Question";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-warning">
+        <i class="bi bi-pencil-square"></i> Edit Question
+    </h2>
+
+    <form asp-action="EditQuestion" asp-controller="Question" asp-area="Creator" method="post" class="needs-validation" novalidate>
+        <input type="hidden" asp-for="SurveyId" />
+        <input type="hidden" asp-for="Question.QuestionId" />
+
+        <div class="mb-3">
+            <label asp-for="Question.QuestionText" class="form-label">Question Text</label>
+            <input asp-for="Question.QuestionText" class="form-control" placeholder="Enter your question..." required />
+            <span asp-validation-for="Question.QuestionText" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Options (4 only)</label>
+            <div id="options-container">
+                @for (int i = 0; i < 4; i++)
+                {
+                    <div class="input-group mb-2">
+                        <input name="Options[@i].OptionText"
+                               value="@(Model.Options.Count() > i ? Model.Options.ElementAt(i).OptionText : string.Empty)"
+                               class="form-control"
+                               placeholder="Option @(i + 1)" required />
+                        <input type="hidden" name="Options[@i].OptionId"
+                               value="@(Model.Options.Count() > i ? Model.Options.ElementAt(i).OptionId : 0)" />
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <button type="submit" class="btn btn-success">
+                <i class="bi bi-check-circle"></i> Save Changes
+            </button>
+            <a asp-action="GetAllQuestions" asp-route-surveyId="@Model.SurveyId" class="btn btn-secondary">
+                <i class="bi bi-arrow-left"></i> Back to Questions
+            </a>
+        </div>
+    </form>
+</div>

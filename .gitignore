@@ -1,0 +1,45 @@
+# Build results
+bin/
+obj/
+
+# Visual Studio files
+.vs/
+*.user
+*.suo
+*.log
+
+# Local .NET tools/cache
+.dotnet/
+
+# Test results
+TestResults/
+
+# NuGet packages
+*.nupkg
+*.snupkg
+packages/
+
+# Backup & temporary files
+*.bak
+*.tmp
+
+# Environment-specific appsettings (ignore secrets)
+appsettings.Development.json
+appsettings.Production.json
+appsettings.Staging.json
+
+# Publish output
+publish/
+
+# Rider project files
+.idea/
+
+# VS Code settings
+.vscode/
+
+# Resharper settings
+_ReSharper.Caches/
+
+# Other IDE caches
+*.swp
+*.sln.docstates

@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Thank You";
+}
+
+<div class="container mt-5 text-center">
+    <div class="card shadow-sm p-4">
+        <div class="card-body">
+            <h2 class="text-success mb-3">
+                <i class="bi bi-check-circle-fill"></i> Thank You!
+            </h2>
+            <p class="lead text-muted">
+                Your responses have been submitted successfully.
+            </p>
+
+            <hr />
+
+            <p class="text-secondary">
+                We appreciate your time and effort in completing this survey.
+            </p>
+
+            <a asp-area="Respondent" asp-controller="Dashboard" asp-action="Index" class="btn btn-primary mt-3">
+                <i class="bi bi-arrow-left-circle"></i> Back to Dashboard
+            </a>
+        </div>
+    </div>
+</div>

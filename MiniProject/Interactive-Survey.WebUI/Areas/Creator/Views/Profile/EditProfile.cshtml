@@ -1,0 +1,108 @@
+﻿@model CreatorVM
+
+@{
+	ViewData["Title"] = "Edit Profile";
+}
+
+<div class="container mt-4">
+	<h2 class="mb-4"><i class="bi bi-pencil-square"></i> Edit Profile</h2>
+
+	<form asp-area="Creator" asp-controller="Profile" asp-action="EditProfile" method="post"
+		  enctype="multipart/form-data">
+		@Html.AntiForgeryToken()
+		<div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+		<input asp-for="Creator.CreatorId" type="hidden" />
+		<input asp-for="Creator.ImageUrl" type="hidden" />
+		<input asp-for="DisplayImageUrl" type="hidden" />
+		<input asp-for="HasCustomImage" type="hidden" />
+
+		<div class="row">
+			<div class="col-md-4 text-center">
+				<img src="@Model.DisplayImageUrl" alt="Profile Image"
+					 class="rounded-circle shadow-sm mb-3"
+					 style="width:200px; height:200px; object-fit:cover;" />
+				@if (Model.HasCustomImage)
+				{
+					<div class="mt-2">
+						<button type="submit" asp-area="Creator" asp-controller="Profile"
+								asp-action="DeleteProfileImage" class="btn btn-outline-danger btn-sm">
+							<i class="bi bi-trash"></i> Remove Image
+						</button>
+					</div>
+				}
+
+				<div class="mt-3">
+					<label asp-for="Creator.ImageFile" class="form-label">
+						<i class="bi bi-upload"></i> Upload New Image
+					</label>
+					<input asp-for="Creator.ImageFile" type="file" class="form-control" />
+					<span asp-validation-for="Creator.ImageFile" class="text-danger">
+					</span>
+				</div>
+			</div>
+
+			<div class="col-md-8">
+				<div class="mb-3">
+					<label asp-for="Creator.FullName" class="form-label">
+						<i class="bi bi-person"></i> Full Name
+					</label>
+					<input asp-for="Creator.FullName" class="form-control" />
+					<span asp-validation-for="Creator.FullName" class="text-danger">
+					</span>
+				</div>
+
+				<div class="mb-3">
+					<label asp-for="Creator.PhoneNumber" class="form-label">
+						<i class="bi bi-telephone"></i> Phone Number
+					</label>
+					<input asp-for="Creator.PhoneNumber" class="form-control" />
+					<span asp-validation-for="Creator.PhoneNumber" class="text-danger">
+					</span>
+				</div>
+
+				<div class="mb-3">
+					<label asp-for="Creator.Address" class="form-label">
+						<i class="bi bi-geo-alt"></i> Address
+					</label>
+					<input asp-for="Creator.Address" class="form-control" />
+					<span asp-validation-for="Creator.Address" class="text-danger">
+					</span>
+				</div>
+
+				<div class="mb-3">
+					<label asp-for="Creator.Gender" class="form-label">
+						<i class="bi bi-gender-ambiguous"></i> Gender
+					</label>
+					<select asp-for="Creator.Gender" asp-items="Model.GenderList"
+							class="form-select">
+						<option value="">-- Select Gender --</option>
+					</select>
+					<span asp-validation-for="Creator.Gender" class="text-danger"></span>
+				</div>
+
+				<div class="mb-3">
+					<label asp-for="Creator.DateOfBirth" class="form-label">
+						<i class="bi bi-calendar"></i> Date of Birth
+					</label>
+					<input asp-for="Creator.DateOfBirth" type="date" class="form-control" />
+					<span asp-validation-for="Creator.DateOfBirth" class="text-danger"></span>
+				</div>
+			</div>
+		</div>
+
+		<div class="mt-4 text-end">
+			<button type="submit" class="btn btn-success">
+				<i class="bi bi-check-circle"></i> Save Changes
+			</button>
+			<a asp-area="Creator" asp-controller="Profile" asp-action="GetProfile"
+			   class="btn btn-secondary">
+				<i class="bi bi-arrow-left-circle"></i> Cancel
+			</a>
+		</div>
+	</form>
+</div>
+
+@section Scripts {
+	<partial name="_ValidationScriptsPartial" />
+}

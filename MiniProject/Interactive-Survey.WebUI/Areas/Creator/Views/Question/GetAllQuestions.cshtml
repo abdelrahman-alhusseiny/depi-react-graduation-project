@@ -1,0 +1,91 @@
+﻿@model QuestionListVM
+
+@{
+    ViewData["Title"] = "Questions List";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4 text-primary">
+        <i class="bi bi-question-circle"></i> Questions for Survey
+    </h2>
+
+    <form asp-action="GetAllQuestions" method="get" class="row g-3 mb-4 align-items-center">
+        <input type="hidden" name="surveyId" value="@Model.SurveyId" />
+
+        <div class="col-md-6">
+            <input type="text" name="searchString" value="@Model.SearchString"
+                   class="form-control search-bar"
+                   placeholder="Search questions..." />
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-search w-100">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </div>
+
+        <div class="col-md-2">
+            <a asp-action="GetAllQuestions" asp-route-surveyId="@Model.SurveyId"
+               class="btn btn-reset w-100">
+                <i class="bi bi-arrow-repeat"></i> Reset
+            </a>
+        </div>
+    </form>
+
+
+    @if (Model.Questions != null && Model.Questions.Any())
+    {
+        foreach (var item in Model.Questions)
+        {
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-light">
+                    <span class="fw-bold text-primary">@item.Question.QuestionText</span>
+                </div>
+                <div class="card-body">
+                    <h6 class="text-muted">Options:</h6>
+                    <ul class="list-group list-group-flush mb-3">
+                        @foreach (var opt in item.Options)
+                        {
+                            <li class="list-group-item">
+                                <i class="bi bi-dot"></i> @opt.OptionText
+                            </li>
+                        }
+                    </ul>
+
+                    <div class="d-flex justify-content-end">
+                        <a asp-area="Creator" asp-controller="Question"
+                           asp-action="EditQuestion" asp-route-id="@item.Question.QuestionId"
+                           class="btn btn-sm btn-warning me-2">
+                            <i class="bi bi-pencil-square"></i> Edit
+                        </a>
+                        <a asp-area="Creator" asp-controller="Question"
+                           asp-action="DeleteQuestion" asp-route-id="@item.Question.QuestionId"
+                           class="btn btn-sm btn-danger me-2">
+                            <i class="bi bi-trash"></i> Delete
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning text-center">
+            No questions found for this survey.
+        </div>
+    }
+
+    <div class="mt-3 d-flex justify-content-between">
+        <a asp-area="Creator" asp-controller="Survey"
+           asp-action="GetAllSurveys"
+           class="btn btn-secondary">
+            <i class="bi bi-arrow-left-circle"></i> Back to Surveys
+        </a>
+
+        <a asp-area="Creator" asp-controller="Question"
+           asp-action="CreateQuestion" asp-route-surveyId="@Model.SurveyId"
+           class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Add New Question
+        </a>
+    </div>
+</div>
